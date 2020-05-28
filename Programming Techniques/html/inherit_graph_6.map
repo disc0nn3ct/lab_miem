@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_pizza___builder.html" title="Базовый класс Базовый класс который объявляет интерфейс для поэтапного построения пиццы и предусматри..." alt="" coords="5,31,108,57"/>
+<area shape="rect" id="node2" href="$class_margarita___pizza___builder.html" title="Маргарита" alt="" coords="158,5,321,32"/>
+<area shape="rect" id="node3" href="$class_papperoni___pizza___builder.html" title="Пепперони" alt="" coords="156,56,323,83"/>
+</map>

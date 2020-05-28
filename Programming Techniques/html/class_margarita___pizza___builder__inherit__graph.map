@@ -1,0 +1,4 @@
+<map id="Margarita_Pizza_Builder" name="Margarita_Pizza_Builder">
+<area shape="rect" id="node1" title="Маргарита" alt="" coords="5,277,168,428"/>
+<area shape="rect" id="node2" href="$class_pizza___builder.html" title="Базовый класс Базовый класс который объявляет интерфейс для поэтапного построения пиццы и предусматри..." alt="" coords="21,5,153,229"/>
+</map>

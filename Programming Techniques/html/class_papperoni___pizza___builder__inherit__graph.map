@@ -1,0 +1,4 @@
+<map id="Papperoni_Pizza_Builder" name="Papperoni_Pizza_Builder">
+<area shape="rect" id="node1" title="Пепперони" alt="" coords="5,277,172,428"/>
+<area shape="rect" id="node2" href="$class_pizza___builder.html" title="Базовый класс Базовый класс который объявляет интерфейс для поэтапного построения пиццы и предусматри..." alt="" coords="23,5,155,229"/>
+</map>
