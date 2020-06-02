@@ -1,0 +1,121 @@
+\hypertarget{class_observer}{}\doxysection{Observer Class Reference}
+\label{class_observer}\index{Observer@{Observer}}
+
+
+Класс наблюдателя  
+
+
+
+
+Inheritance diagram for Observer\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{class_observer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Observer\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{class_observer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_observer_a6ee50ae0667bf6aa6e65f3699c830905}{Observer}} (\mbox{\hyperlink{class_subject}{Subject}} \&subject)
+\begin{DoxyCompactList}\small\item\em Конструктор наблюдателя \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_observer_afcc6b67be6c386f2f3d2c363aa59cb47}{$\sim$\+Observer}} ()
+\begin{DoxyCompactList}\small\item\em Деструктор наблюдателя \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_observer_ab9dd1a3bca26aba0c716050b94ed87ed}{Update}} (const int \&value, bool f) override
+\begin{DoxyCompactList}\small\item\em Будет ли он повышать? ~\newline
+ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_observer_add6dc712ca2df410b40dde7be83c1084}{Remove\+Me\+From\+The\+List}} ()
+\begin{DoxyCompactList}\small\item\em Выходит из участия за лот \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Класс наблюдателя 
+
+Тут реализована логика подписчика. 
+
+Definition at line 159 of file six.\+cpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_observer_a6ee50ae0667bf6aa6e65f3699c830905}\label{class_observer_a6ee50ae0667bf6aa6e65f3699c830905}} 
+\index{Observer@{Observer}!Observer@{Observer}}
+\index{Observer@{Observer}!Observer@{Observer}}
+\doxysubsubsection{\texorpdfstring{Observer()}{Observer()}}
+{\footnotesize\ttfamily Observer\+::\+Observer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_subject}{Subject}} \&}]{subject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор наблюдателя 
+
+Устанавливает за кем наблюдает. ~\newline
+ 
+
+Definition at line 167 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_observer_afcc6b67be6c386f2f3d2c363aa59cb47}\label{class_observer_afcc6b67be6c386f2f3d2c363aa59cb47}} 
+\index{Observer@{Observer}!````~Observer@{$\sim$Observer}}
+\index{````~Observer@{$\sim$Observer}!Observer@{Observer}}
+\doxysubsubsection{\texorpdfstring{$\sim$Observer()}{~Observer()}}
+{\footnotesize\ttfamily virtual Observer\+::$\sim$\+Observer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Деструктор наблюдателя 
+
+Просто прописывает прощание учвастника и его номер. ~\newline
+ 
+
+Definition at line 178 of file six.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_observer_add6dc712ca2df410b40dde7be83c1084}\label{class_observer_add6dc712ca2df410b40dde7be83c1084}} 
+\index{Observer@{Observer}!RemoveMeFromTheList@{RemoveMeFromTheList}}
+\index{RemoveMeFromTheList@{RemoveMeFromTheList}!Observer@{Observer}}
+\doxysubsubsection{\texorpdfstring{RemoveMeFromTheList()}{RemoveMeFromTheList()}}
+{\footnotesize\ttfamily void Observer\+::\+Remove\+Me\+From\+The\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Выходит из участия за лот 
+
+Участник уходит из торгов ~\newline
+ 
+
+Definition at line 211 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_observer_ab9dd1a3bca26aba0c716050b94ed87ed}\label{class_observer_ab9dd1a3bca26aba0c716050b94ed87ed}} 
+\index{Observer@{Observer}!Update@{Update}}
+\index{Update@{Update}!Observer@{Observer}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Observer\+::\+Update (\begin{DoxyParamCaption}\item[{const int \&}]{value,  }\item[{bool}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Будет ли он повышать? ~\newline
+ 
+
+Тут проверяется повысит ли ставку участник или нет.. 
+
+Implements \mbox{\hyperlink{class_i_observer_af0d7c27dc69f50569276e601815923c1}{I\+Observer}}.
+
+
+
+Definition at line 190 of file six.\+cpp.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{six_8cpp}{six.\+cpp}}\end{DoxyCompactItemize}

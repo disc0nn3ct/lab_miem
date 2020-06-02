@@ -1,0 +1,210 @@
+\hypertarget{class_subject}{}\doxysection{Subject Class Reference}
+\label{class_subject}\index{Subject@{Subject}}
+
+
+Inheritance diagram for Subject\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{class_subject__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Subject\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{class_subject__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_subject_ab468044832c824c6d6c2f46272655207}{Subject}} ()
+\begin{DoxyCompactList}\small\item\em конструктор по умолчанию \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_subject_ae2d5d75e76385fffcbff025ebccb934e}{Subject}} (string item1, int start\+\_\+val, int coef=300)
+\begin{DoxyCompactList}\small\item\em конструктор задающий лот и стартовую стоимость \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_subject_ae5980067d5ec5522db5a0d78100a34be}{$\sim$\+Subject}} ()
+\begin{DoxyCompactList}\small\item\em деструктор \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_abcdd2d6a7779cf427276086872510ca9}{Attach}} (\mbox{\hyperlink{class_i_observer}{I\+Observer}} $\ast$observer) override
+\begin{DoxyCompactList}\small\item\em добавить наблюдателя \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_a6f657b13894fc037731a27220c16716a}{Detach}} (\mbox{\hyperlink{class_i_observer}{I\+Observer}} $\ast$observer) override
+\begin{DoxyCompactList}\small\item\em Исключить наблюдателя \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_a48626cea0c6d7df922747bebf80f99b8}{Notify}} () override
+\begin{DoxyCompactList}\small\item\em Уведомить всех подписчиков \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_ab59c17b6f53c4a19ad96e7ebf8a7603a}{How\+Many\+Observer}} ()
+\begin{DoxyCompactList}\small\item\em Выводит кол-\/во участников в торгах \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_ad1dfe6c589754d554950ddeb7b0e153f}{start\+\_\+bargaining}} ()
+\begin{DoxyCompactList}\small\item\em Начало торгов и сами торги \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_subject_a05e363c541f490ff0a926f9af50c3653}{bingo}} (int last, int stepp=100)
+\begin{DoxyCompactList}\small\item\em Проверка и повышение стоимости \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Издатель владеет некоторым важным состоянием и оповещает наблюдателей о его изменениях. 
+
+Definition at line 42 of file six.\+cpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_subject_ab468044832c824c6d6c2f46272655207}\label{class_subject_ab468044832c824c6d6c2f46272655207}} 
+\index{Subject@{Subject}!Subject@{Subject}}
+\index{Subject@{Subject}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{Subject()}{Subject()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Subject\+::\+Subject (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+конструктор по умолчанию 
+
+Просто выводит на экран что объект создан успешно ~\newline
+ 
+
+Definition at line 49 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_ae2d5d75e76385fffcbff025ebccb934e}\label{class_subject_ae2d5d75e76385fffcbff025ebccb934e}} 
+\index{Subject@{Subject}!Subject@{Subject}}
+\index{Subject@{Subject}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{Subject()}{Subject()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Subject\+::\+Subject (\begin{DoxyParamCaption}\item[{string}]{item1,  }\item[{int}]{start\+\_\+val,  }\item[{int}]{coef = {\ttfamily 300} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+конструктор задающий лот и стартовую стоимость 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em item1} & название вещи \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+\_\+val} & начальная стоимость \\
+\hline
+\mbox{\texttt{ in}}  & {\em coef} & коэффициент за которого будут готовы продать вещь по умолчанию он равен 300\\
+\hline
+\end{DoxyParams}
+Создаем лот и стартовую цену. Шаг ставок обычно 100. И вещь продается человеку, который 1-\/ый достиг цены превышающей в 300 раз начальную. 
+
+Definition at line 62 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_ae5980067d5ec5522db5a0d78100a34be}\label{class_subject_ae5980067d5ec5522db5a0d78100a34be}} 
+\index{Subject@{Subject}!````~Subject@{$\sim$Subject}}
+\index{````~Subject@{$\sim$Subject}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{$\sim$Subject()}{~Subject()}}
+{\footnotesize\ttfamily virtual Subject\+::$\sim$\+Subject (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+деструктор 
+
+Просто пишет Прощание и выводит имя свеого продаваемого товара, цену по которой товар был продан. И номер человека которому был продан товар. Если N человека =0 то этот товар не был продан. 
+
+Definition at line 76 of file six.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_subject_abcdd2d6a7779cf427276086872510ca9}\label{class_subject_abcdd2d6a7779cf427276086872510ca9}} 
+\index{Subject@{Subject}!Attach@{Attach}}
+\index{Attach@{Attach}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{Attach()}{Attach()}}
+{\footnotesize\ttfamily void Subject\+::\+Attach (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_observer}{I\+Observer}} $\ast$}]{observer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+добавить наблюдателя 
+
+Методы управления подпиской. 
+
+Implements \mbox{\hyperlink{class_i_subject_ae5eab66fa44f227aaafd9aee56018fe8}{I\+Subject}}.
+
+
+
+Definition at line 89 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_a05e363c541f490ff0a926f9af50c3653}\label{class_subject_a05e363c541f490ff0a926f9af50c3653}} 
+\index{Subject@{Subject}!bingo@{bingo}}
+\index{bingo@{bingo}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{bingo()}{bingo()}}
+{\footnotesize\ttfamily void Subject\+::bingo (\begin{DoxyParamCaption}\item[{int}]{last,  }\item[{int}]{stepp = {\ttfamily 100} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Проверка и повышение стоимости 
+
+Провека не продан ли был товар. Установление новой стоимости на товар (по шагу, шаг по умолчанию 100). И тут же определяется купивший товар человек. 
+
+Definition at line 136 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_a6f657b13894fc037731a27220c16716a}\label{class_subject_a6f657b13894fc037731a27220c16716a}} 
+\index{Subject@{Subject}!Detach@{Detach}}
+\index{Detach@{Detach}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{Detach()}{Detach()}}
+{\footnotesize\ttfamily void Subject\+::\+Detach (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_observer}{I\+Observer}} $\ast$}]{observer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Исключить наблюдателя 
+
+
+
+Implements \mbox{\hyperlink{class_i_subject_a2839e9b5ad3cdd6e73081272def58e27}{I\+Subject}}.
+
+
+
+Definition at line 95 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_ab59c17b6f53c4a19ad96e7ebf8a7603a}\label{class_subject_ab59c17b6f53c4a19ad96e7ebf8a7603a}} 
+\index{Subject@{Subject}!HowManyObserver@{HowManyObserver}}
+\index{HowManyObserver@{HowManyObserver}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{HowManyObserver()}{HowManyObserver()}}
+{\footnotesize\ttfamily void Subject\+::\+How\+Many\+Observer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Выводит кол-\/во участников в торгах 
+
+
+
+Definition at line 113 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_a48626cea0c6d7df922747bebf80f99b8}\label{class_subject_a48626cea0c6d7df922747bebf80f99b8}} 
+\index{Subject@{Subject}!Notify@{Notify}}
+\index{Notify@{Notify}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{Notify()}{Notify()}}
+{\footnotesize\ttfamily void Subject\+::\+Notify (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Уведомить всех подписчиков 
+
+
+
+Implements \mbox{\hyperlink{class_i_subject_a719fcebc1bb7d0a7e83c52a58c24a75d}{I\+Subject}}.
+
+
+
+Definition at line 101 of file six.\+cpp.
+
+\mbox{\Hypertarget{class_subject_ad1dfe6c589754d554950ddeb7b0e153f}\label{class_subject_ad1dfe6c589754d554950ddeb7b0e153f}} 
+\index{Subject@{Subject}!start\_bargaining@{start\_bargaining}}
+\index{start\_bargaining@{start\_bargaining}!Subject@{Subject}}
+\doxysubsubsection{\texorpdfstring{start\_bargaining()}{start\_bargaining()}}
+{\footnotesize\ttfamily void Subject\+::start\+\_\+bargaining (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Начало торгов и сами торги 
+
+Выводит на экран нынешнюю стоимость товара и оповещает всех подписчиков, о нынешней стоимости товара. ~\newline
+ 
+
+Definition at line 123 of file six.\+cpp.
+
+Here is the caller graph for this function\+:
+% FIG 0
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{six_8cpp}{six.\+cpp}}\end{DoxyCompactItemize}
