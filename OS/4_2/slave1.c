@@ -11,6 +11,8 @@ struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, 0, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 1, IPC_NOWAIT}, {1, 1, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {2, -1, IPC_NOWAIT};
 
+
+
 int str_to_int(char* stri)
 {
 	int k = atoi(stri); 
@@ -19,10 +21,7 @@ int str_to_int(char* stri)
 }
 
 
-
-
-
-void Finding_liver(char* addr, int* maxSec, int* PID)
+void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 {
 
 	// printf("=====================================================\n");
@@ -82,6 +81,26 @@ void Finding_liver(char* addr, int* maxSec, int* PID)
 		// printf("======================================================\n");			
 	// printf("timed %d\n", *PID);
 	// printf("=====================================================\n");
+		strcpy(cmd, "echo \"");
+		strcat(cmd, addr);
+		cmd[strlen(cmd)-1]=' ';
+		strcat(cmd, "| grep ");
+		strcat(cmd, buffer);
+		strcat(cmd, "\" | awk '{print $2}' | head -1");
+		f= popen (cmd, "r");
+		if (f == NULL) perror ("Ошибка открытия файла");
+		else
+		{
+		    while ( !feof(f) )    // пока не конец файла                           
+		    {
+		       if ( fgets(buffer, 100 , f) != NULL )     // считать символы из файла 
+		        ;                      
+		    }
+		    fclose (f);             // закрыть файл                         
+		}
+	// printf("BUUUUUUUUUUUUUUUUUUUUUUUUUUUFFFF %s\n", cmd );
+	strcpy(state, buffer);	   
+
 	}
 	// printf("TIMEEEEEEEEEEEEEEEEEEEE %s\n", buffer);
 
@@ -89,12 +108,9 @@ void Finding_liver(char* addr, int* maxSec, int* PID)
 
 }
 
-
-
-
 int main()
 {
-
+	char* state;
 	int maxSec = -1, PID = -1; 
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -113,7 +129,7 @@ int main()
 		if (semop(fd_sem, nbuf1, 2) != -1)
 		{
 			printf("%s", addr);
-			Finding_liver(addr, &maxSec, &PID);
+			Finding_liver(addr, &maxSec, &PID, state);
 			// printf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
 			semop(fd_sem, nbuf2, 2);
 		}
@@ -124,8 +140,12 @@ int main()
 // char addr[1024]= "4 R c0nn3ct    20439   20438  0  80   0 -  2933 -      20:35 pts/0    23:59:31 ps -l -fuc0nn3c" ;
 
 
+	printf("=====================================================\n");
+	printf("Сколько секунд жил %d PID = %d\n", maxSec, PID);
+	printf("состояние = %s\n", state);
 
-	printf("Сколько секунд %d PID = %d\n", maxSec, PID);
+
+
 
 	if ( shmdt( addr ) == -1 ) perror("shmdt");   // need 
 	
