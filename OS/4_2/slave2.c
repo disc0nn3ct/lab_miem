@@ -6,7 +6,22 @@
 #include <string.h>
 #include <stdlib.h>
 
-// struct sembuf nbuf[3] = {{0, -1, 0}, {0, -3, IPC_NOWAIT}, {0, 2, 0}};
+
+///////////////////////////////////////////////////
+// для сообщений 
+#include <sys/msg.h> // для msgget
+
+#ifndef MSGMAX
+#define MSGMAX 1024
+#endif 
+
+struct msgbuf {
+long mtype;
+char text[MSGMAX];
+};
+//////////////////////////////////////////////////
+
+
 struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, -1, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
@@ -97,7 +112,6 @@ int main()
 	{
 		if (semop(fd_sem, nbuf1, 2) != -1)
 		{
-		// semop(fd_sem, nbuf1, 2);
 		printf("%s", addr);
 		Finding_liver(addr, &minPrior, &PID);
 		semop(fd_sem, nbuf2, 2);
@@ -115,11 +129,21 @@ int main()
 	}
 	printf("Минимальный приоритет %d у PID %d \n",minPrior, PID);
 
-	// printf("%s\n", addr);
 
 
 	if ( shmdt( addr ) == -1 ) perror("shmdt");
-	
+////////////////////////////////////////////////////	
+
+	int fd123 = msgget(112, IPC_CREAT | 0666 );
+
+	struct msgbuf buf12;
+	struct msqid_ds bufxx;
+	buf12.mtype = 16;
+	sprintf(buf12.text, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
+	if (fd123 == -1 || msgsnd(fd123, &buf12, strlen(buf12.text)+1, IPC_NOWAIT) == -1 )
+		perror("Ошибка сообщения"); 
+
+
 
 	return 0;
 }

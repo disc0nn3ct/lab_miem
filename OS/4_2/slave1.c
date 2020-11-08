@@ -6,7 +6,22 @@
 #include <string.h>
 #include <stdlib.h>
 
-// struct sembuf nbuf[3] = {{0, -1, 0}, {0, -3, IPC_NOWAIT}, {0, 2, 0}};
+///////////////////////////////////////////////////
+// для сообщений 
+#include <sys/msg.h> // для msgget
+
+#ifndef MSGMAX
+#define MSGMAX 1024
+#endif 
+
+struct msgbuf {
+long mtype;
+char text[MSGMAX];
+};
+//////////////////////////////////////////////////
+
+
+
 struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, 0, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 1, IPC_NOWAIT}, {1, 1, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {2, -1, IPC_NOWAIT};
@@ -24,7 +39,6 @@ int str_to_int(char* stri)
 void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 {
 
-	// printf("=====================================================\n");
 	char buffer[100];
 
 
@@ -48,18 +62,12 @@ void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 	   }
 
 	int sec=0;
-	// printf("%d\n%d\n%d\n", str_to_int(&buffer[0]), str_to_int(&buffer[3]) , str_to_int(&buffer[6]));
 	sec+= str_to_int(&buffer[0])*3600 + str_to_int(&buffer[3])*60 + str_to_int(&buffer[6]);
 
-	// printf("time = %s\n", buffer);
 
 
 	if(*maxSec < sec)
 	{
-		// printf("======================================================\n");
-		// printf("IN IT \n" );
-		// printf("%d\n%d\n%d\n", str_to_int(&buffer[0]), str_to_int(&buffer[3]) , str_to_int(&buffer[6]));
-
 		*maxSec = sec; 
 		strcpy(cmd, "echo \"");
 		strcat(cmd, addr);
@@ -77,10 +85,6 @@ void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 		     fclose (f);             // закрыть файл                         
 		   }
 		*PID = str_to_int(buffer);
-			// printf("buf= %s\n",buffer );
-		// printf("======================================================\n");			
-	// printf("timed %d\n", *PID);
-	// printf("=====================================================\n");
 		strcpy(cmd, "echo \"");
 		strcat(cmd, addr);
 		cmd[strlen(cmd)-1]=' ';
@@ -98,11 +102,9 @@ void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 		    }
 		    fclose (f);             // закрыть файл                         
 		}
-	// printf("BUUUUUUUUUUUUUUUUUUUUUUUUUUUFFFF %s\n", cmd );
 	strcpy(state, buffer);	   
 
 	}
-	// printf("TIMEEEEEEEEEEEEEEEEEEEE %s\n", buffer);
 
 
 
@@ -112,8 +114,6 @@ int main()
 {
 	char* state;
 	int maxSec = -1, PID = -1; 
-
-	//////////////////////////////////////////////////////////////////////////////
 
 	int fd, fd_sem; 
 	char buffer[1024];
@@ -130,25 +130,37 @@ int main()
 		{
 			printf("%s", addr);
 			Finding_liver(addr, &maxSec, &PID, state);
-			// printf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
 			semop(fd_sem, nbuf2, 2);
 		}
 
 	}
 //////////////////////////////////////////////////////////////////////////////
 
-// char addr[1024]= "4 R c0nn3ct    20439   20438  0  80   0 -  2933 -      20:35 pts/0    23:59:31 ps -l -fuc0nn3c" ;
 
 
 	printf("=====================================================\n");
-	printf("Сколько секунд жил %d PID = %d\n", maxSec, PID);
-	printf("состояние = %s\n", state);
+	printf("Сколько секунд жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
+
+
+
+
+
 
 
 
 
 	if ( shmdt( addr ) == -1 ) perror("shmdt");   // need 
-	
+
+	int fd123 = msgget(111, IPC_CREAT | 0666 );
+
+	struct msgbuf buf12;
+	struct msqid_ds bufxx;
+	buf12.mtype = 16;
+	sprintf(buf12.text, "Процесс долгожитель жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
+	if (fd123 == -1 || msgsnd(fd123, &buf12, strlen(buf12.text)+1, IPC_NOWAIT) == -1 )
+		perror("Ошибка сообщения"); 
+
+
 
 	return 0;
 }
