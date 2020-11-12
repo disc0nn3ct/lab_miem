@@ -21,6 +21,7 @@
 struct sembuf first1[2] = {{0, -2, 0}, {1, -2, 0}};
 struct sembuf first[1] = {{2, 2, 0}};
 struct sembuf zero1[1] = {{2, 0, 0}}; // для принятия сообщений (через  РОП --------_____-------)
+struct sembuf plus3[1] = {{2, 6, 0}}; // для принятия сообщений (через  РОП --------_____-------)
 
 
 
@@ -91,8 +92,7 @@ semop(fd_sem, first, 1);
 semop(fd_sem, zero1, 1);
 printf("%s\n", addr);
 
-semop(fd_sem, first, 1);
-semop(fd_sem, first, 1);
+semop(fd_sem, plus3, 1);
 semop(fd_sem, zero1, 1);
 printf("%s\n", addr);
 

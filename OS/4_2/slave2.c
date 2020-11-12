@@ -10,7 +10,7 @@
 struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, -1, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
-struct sembuf zeoro1[1] = {2, -2, 0}; // для посылки сообщения :) 
+struct sembuf zeoro1[1] = {2, -3, 0}; // для посылки сообщения :) 
 
 union semun 
 { int val;
