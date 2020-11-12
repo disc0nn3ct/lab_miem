@@ -18,43 +18,9 @@
 #include <sys/sem.h> // для семафор 	
 
 
-////////////////////////////////
-#include <sys/msg.h> // для msgget
-#ifndef MSGMAX
-#define MSGMAX 1024
-#endif 
-struct msgbuf 
-{
-long mtype;
-char text[MSGMAX];
-};
-
-void ms_from_slave(int num1)
-{
-	struct msgbuf buf12;
-	struct msqid_ds buf13;
-	int fd = msgget(num1, 0);
-	if(msgrcv(fd, &buf12, MSGMAX,16, IPC_NOWAIT) != -1)
-	{
-		if(num1 == 111)
-			printf("Slave 1 шепчет нам: \n%s", buf12.text);
-		else
-			printf("Slave 2 шепчет нам: \n%s", buf12.text);
-
-
-	}
-	else printf("ERoR\n");
-	msgctl(fd, IPC_RMID, NULL);
-
-}
-
-
-
-/////////////////////////////////
-
-
 struct sembuf first1[2] = {{0, -2, 0}, {1, -2, 0}};
 struct sembuf first[1] = {{2, 2, 0}};
+struct sembuf zero1[1] = {{2, 0, 0}}; // для принятия сообщений (через  РОП --------_____-------)
 
 
 
@@ -90,9 +56,9 @@ int main()
 
 
 
-	arg.val = 0; semctl( fd_sem, 0, SETVAL, arg );
-	arg.val = 1; semctl( fd_sem, 0, SETVAL, arg ); 
-	arg.val = 2; semctl( fd_sem, 0, SETVAL, arg ); 
+	arg.val = 2; semctl( fd_sem, 0, SETVAL, arg );
+	arg.val = 0; semctl( fd_sem, 1, SETVAL, arg ); 
+	arg.val = 0; semctl( fd_sem, 2, SETVAL, arg ); 
 
 
 	if (f == NULL) perror ("Ошибка открытия файла");
@@ -105,7 +71,7 @@ int main()
 			strcpy(addr, buffer);  
 			arg.val = 0; semctl( fd_sem, 1, SETVAL, arg );
 			arg.val = 1; semctl( fd_sem, 0, SETVAL, arg ); 
-			semop(fd_sem, first1, 2);
+			semop(fd_sem, first1, 1);
 		}
 	}
 	fclose(f);                                      
@@ -120,13 +86,26 @@ if ( shmctl( fd, IPC_STAT,  &sbuf ) == 0 )
     { printf("Размер РОП: %ld\n",  sbuf.shm_segsz );}
     
 
+// arg.val = 0; semctl( fd_sem, 2, SETVAL, arg );
+semop(fd_sem, first, 1);
+semop(fd_sem, zero1, 1);
+printf("%s\n", addr);
+
+semop(fd_sem, first, 1);
+semop(fd_sem, first, 1);
+semop(fd_sem, zero1, 1);
+printf("%s\n", addr);
+
+
+
+
+
+
 if ( shmdt( addr ) == -1 ) perror("shmdt");
 
 if ( semctl( fd_sem, 0, IPC_RMID, 0 ) == -1 ) perror( "semctl" );
 if ( shmctl( fd,  IPC_RMID,  0 ) == -1 ) perror("shmctl3");
 //////////////////////////////////////////////////////////
-ms_from_slave(111);
-ms_from_slave(112);
 
 
 	return 0;

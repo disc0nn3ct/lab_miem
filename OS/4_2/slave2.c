@@ -2,29 +2,15 @@
 #include <sys/ipc.h> // Разделяемая область память (РОП)
 #include <sys/shm.h> 
 #include <unistd.h>   //Для _exit 
-#include <sys/sem.h> // для семофор 	
+#include <sys/sem.h> // для семафор 	
 #include <string.h>
 #include <stdlib.h>
-
-
-///////////////////////////////////////////////////
-// для сообщений 
-#include <sys/msg.h> // для msgget
-
-#ifndef MSGMAX
-#define MSGMAX 1024
-#endif 
-
-struct msgbuf {
-long mtype;
-char text[MSGMAX];
-};
-//////////////////////////////////////////////////
 
 
 struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, -1, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
+struct sembuf zeoro1[1] = {2, -2, 0}; // для посылки сообщения :) 
 
 union semun 
 { int val;
@@ -131,17 +117,15 @@ int main()
 
 
 
+	semop(fd_sem, zeoro1, 1 );
+	sprintf(addr, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
+	semop(fd_sem, zeoro1, 1 );
+
+
+
+
 	if ( shmdt( addr ) == -1 ) perror("shmdt");
-////////////////////////////////////////////////////	
 
-	int fd123 = msgget(112, IPC_CREAT | 0666 );
-
-	struct msgbuf buf12;
-	struct msqid_ds bufxx;
-	buf12.mtype = 16;
-	sprintf(buf12.text, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
-	if (fd123 == -1 || msgsnd(fd123, &buf12, strlen(buf12.text)+1, IPC_NOWAIT) == -1 )
-		perror("Ошибка сообщения"); 
 
 
 

@@ -6,26 +6,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-///////////////////////////////////////////////////
-// для сообщений 
-#include <sys/msg.h> // для msgget
-
-#ifndef MSGMAX
-#define MSGMAX 1024
-#endif 
-
-struct msgbuf {
-long mtype;
-char text[MSGMAX];
-};
-//////////////////////////////////////////////////
-
-
 
 struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, 0, IPC_NOWAIT}};
 struct sembuf nbuf2[2] = {{0, 1, IPC_NOWAIT}, {1, 1, IPC_NOWAIT}};
 struct sembuf zeoro[1] = {2, -1, IPC_NOWAIT};
-
+struct sembuf zeoro1[1] = {2, -1, 0}; // для посылки сообщения :) 
 
 
 int str_to_int(char* stri)
@@ -141,25 +126,18 @@ int main()
 	printf("=====================================================\n");
 	printf("Сколько секунд жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
 
-
-
-
-
+	if (semop(fd_sem, zeoro1, 1) == -1 )
+	{
+		printf("%s\n", "Error");
+	}
+	sprintf(addr, "Процесс долгожитель жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
+	// strcpy(addr, "LOL");  
+	semop(fd_sem, zeoro1, 1 );
 
 
 
 
 	if ( shmdt( addr ) == -1 ) perror("shmdt");   // need 
-
-	int fd123 = msgget(111, IPC_CREAT | 0666 );
-
-	struct msgbuf buf12;
-	struct msqid_ds bufxx;
-	buf12.mtype = 16;
-	sprintf(buf12.text, "Процесс долгожитель жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
-	if (fd123 == -1 || msgsnd(fd123, &buf12, strlen(buf12.text)+1, IPC_NOWAIT) == -1 )
-		perror("Ошибка сообщения"); 
-
 
 
 	return 0;
