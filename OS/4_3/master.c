@@ -19,13 +19,26 @@
 
 void unique(char *arr1, char* arr2)
 {
-	printf("%s\n", arr1 );
-	printf("%s\n", arr2 );
+	// printf("%s\n", arr1 );
+	// printf("%s\n", arr2 );
+	char buffer[2048];
+	char cmd[2300] = "echo ";
+	strcat(cmd, arr1);
+	strcat(cmd, " ");
+	strcat(cmd, arr2);
+	strcat(cmd, " | tr \" \" \"\n\" | sort | uniq -u | tr \"\n\" \" \" ");
 	
-
-
-
-
+	FILE *f= popen (cmd, "r");
+	if (f == NULL) perror ("Ошибка открытия файла");
+	else
+	{
+	while ( !feof(f) )    						    // пока не конец файла                           
+	{
+		if ( fgets(buffer , 1024 , f) != NULL )       // считать символы из файла 
+			printf("%s\n",buffer);                       
+	}
+	fclose (f);             						// закрыть файл                         
+	}
 
 }
 
@@ -56,14 +69,14 @@ int main()
 	char buffer[1024];
 	bzero(buffer, sizeof(buffer));
 	recv( fd1, buffer, sizeof( buffer ), 0 );
-	printf("%s\n", buffer);
+	// printf("%s\n", buffer);
 
 
 	char buffer1[1024];
 	int fd2 = accept( fd, 0, 0 ); 
 	bzero(buffer1, sizeof(buffer1));
 	recv( fd2, buffer1, sizeof( buffer1 ), 0 );
-	printf("%s\n", buffer1);
+	// printf("%s\n", buffer1);
 
 	unique(buffer, buffer1);
 
