@@ -43,10 +43,6 @@ void unique(char *arr1, char* arr2)
 }
 
 
-
-
-
-
 int main()
 {
 	struct sockaddr_un addr;	
