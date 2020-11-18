@@ -80,19 +80,6 @@ int main()
 
 	unique(buffer, buffer1);
 
-	
-
-
-// bind 
-
-	// listen 
-	// accept 
-	// send 
-	// shutdown или close ???
-
-
-
-
 
 
 	close( fd1 );
