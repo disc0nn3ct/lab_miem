@@ -18,10 +18,10 @@
 #include <sys/sem.h> // для семафор 	
 
 
-struct sembuf first1[2] = {{0, -2, 0}, {1, -2, 0}};
-struct sembuf first[1] = {{2, 2, 0}};
-struct sembuf zero1[1] = {{2, 0, 0}}; // для принятия сообщений (через  РОП --------_____-------)
-struct sembuf plus3[1] = {{2, 6, 0}}; // для принятия сообщений (через  РОП --------_____-------)
+struct sembuf first[2] = {{0, +1, 0}, {0, -3, 0}};
+// struct sembuf first[1] = {{2, 2, 0}};
+// struct sembuf zero1[1] = {{2, 0, 0}}; // для принятия сообщений (через  РОП --------_____-------)
+// struct sembuf plus3[1] = {{2, 6, 0}}; // для принятия сообщений (через  РОП --------_____-------)
 
 
 
@@ -40,6 +40,7 @@ int main()
 	fgets(buffer, 1024 , f); 
 	strcpy(cmd, "ps -l -fu"); 
 	strcat(cmd, buffer); 
+	strcat(cmd, " | awk -v f=1 -v t=15 \'{for(i=f;i<=t;i++) printf(\"%s%s\",$i,(i==t)?\"\\n\":OFS)}\' ");  // Нужно для ограничения 
 
 	f = popen (cmd, "r");
 
@@ -47,55 +48,77 @@ int main()
 
 	int fd, fd_sem; char* addr;  struct shmid_ds sbuf;
 	struct semid_ds buf; // для семафор 
-	fd = shmget( 100, 1024, IPC_CREAT | 0600 ); // создадим РОП
+	fd = shmget( 100, 25000, IPC_CREAT | 0600 ); // создадим РОП
 
 	if ( fd == -1) { perror( "shmget" ); _exit(1); }
 	addr = (char*)(shmat(fd, 0, 0 ));
 
-	fd_sem = semget( 100, 3, IPC_CREAT | 0640 );  // создим набор семафор 
+	fd_sem = semget( 100, 1, IPC_CREAT | 0640 );  // создим набор семафор 
 	if ( fd_sem == -1 ) { printf( "Ошибка в semget\n" ); _exit( 1 ); }
 
 
 
-	arg.val = 2; semctl( fd_sem, 0, SETVAL, arg );
-	arg.val = 0; semctl( fd_sem, 1, SETVAL, arg ); 
-	arg.val = 0; semctl( fd_sem, 2, SETVAL, arg ); 
+	// arg.val = 2; semctl( fd_sem, 0, SETVAL, arg );
+	// arg.val = 0; semctl( fd_sem, 1, SETVAL, arg ); 
+	arg.val = 0; semctl( fd_sem, 0, SETVAL, arg ); 
 
 
-	if (f == NULL) perror ("Ошибка открытия файла");
-	else
+
+
+	// char temp[50000];
+	while(fgets(buffer, 150, f) != NULL)
 	{
-	while ( !feof(f) )                               
-	{
-		if ( fgets(buffer, 1024 , f) != NULL ) 
-		{     
-			strcpy(addr, buffer);  
-			arg.val = 0; semctl( fd_sem, 1, SETVAL, arg );
-			arg.val = 1; semctl( fd_sem, 0, SETVAL, arg ); 
-			semop(fd_sem, first1, 1);
-		}
-	}
-	fclose(f);                                      
+		// strcat(temp, buffer);
+		strcat(addr, buffer);
+
+		// strcat(buffer, "\n");
 	}
 
-semop(fd_sem, first, 1);
+	semop(fd_sem, &first[0], 1);
+	semop(fd_sem, &first[1], 1);
+
+
+	printf("%ld\n", strlen(addr));
+
+
+
+
+// 	if (f == NULL) perror ("Ошибка открытия файла");
+// 	else
+// 	{
+// 	while ( !feof(f) )                               
+// 	{
+// 		if ( fgets(buffer, 1024 , f) != NULL ) 
+// 		{     
+// 			strcpy(addr, buffer);  
+
+// 			semop(fd_sem, first1, 1);
+// 		}
+// 	}
+// 	fclose(f);                                      
+// 	}
+
+// semop(fd_sem, first, 1);
 
 
 
 
 if ( shmctl( fd, IPC_STAT,  &sbuf ) == 0 ) 
-    { printf("Размер РОП: %ld\n",  sbuf.shm_segsz );}
+    { printf("Размер РОП: %ld\n",  sbuf.shm_segsz );}  
     
 
+
+//////////////////////////////////////////////////////
 // arg.val = 0; semctl( fd_sem, 2, SETVAL, arg );
-semop(fd_sem, first, 1);
-semop(fd_sem, zero1, 1);
-printf("%s\n", addr);
+// semop(fd_sem, first, 1);
+// semop(fd_sem, zero1, 1);
+// printf("%s\n", addr);
 
-semop(fd_sem, plus3, 1);
-semop(fd_sem, zero1, 1);
-printf("%s\n", addr);
+// semop(fd_sem, plus3, 1);
+// semop(fd_sem, zero1, 1);
+// printf("%s\n", addr);
 
+//////////////////////////////////////////////////////
 
 
 

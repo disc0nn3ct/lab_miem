@@ -11,7 +11,6 @@
 #include <strings.h> // для bzero
 #include <netdb.h> // локальные адреса, библиотечные функции для локальных адресов.  для bzero 
 #include <stdlib.h> // для exit 
-#include <string.h>
 #include <sys/un.h> // для sockaddr_un 
 #include <unistd.h> // for close  из мана
 
@@ -39,7 +38,6 @@ void unique(char *arr1, char* arr2)
 	}
 	fclose (f);             						// закрыть файл                         
 	}
-
 }
 
 
@@ -61,12 +59,10 @@ int main()
 	if ( listen( fd, 0 ) != 0 ) printf( "ошибка listen\n" ); 
 	int fd1 = accept( fd, 0, 0 ); 
 
-
 	char buffer[1024];
 	bzero(buffer, sizeof(buffer));
 	recv( fd1, buffer, sizeof( buffer ), 0 );
 	// printf("%s\n", buffer);
-
 
 	char buffer1[1024];
 	int fd2 = accept( fd, 0, 0 ); 
@@ -75,8 +71,6 @@ int main()
 	// printf("%s\n", buffer1);
 
 	unique(buffer, buffer1);
-
-
 
 	close( fd1 );
 	close( fd );

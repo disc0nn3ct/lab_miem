@@ -33,7 +33,7 @@ int main()
 		exit(1);
 	}
 
-    bzero((char *) &serv_addr, sizeof(serv_addr));
+    	bzero((char *) &serv_addr, sizeof(serv_addr));
 
 	serv_addr.sun_family = AF_UNIX;
 	strcpy(serv_addr.sun_path, "/tmp/omg.sock");	
@@ -52,6 +52,6 @@ int main()
 	}
 
 	printf("\n");
-    close(fd);
+    	close(fd);
 	return 0;
 }

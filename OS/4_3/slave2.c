@@ -25,17 +25,17 @@ int main()
 	
 ///////////////////////////////////	
 	
-   struct sockaddr_un serv_addr;
+   	struct sockaddr_un serv_addr;
 
 
-    int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    	int fd = socket(AF_UNIX, SOCK_STREAM, 0);
 	if (fd < 0) 
 	{
 		perror("ERROR opening socket");
 		exit(1);
 	}
 
-    bzero((char *) &serv_addr, sizeof(serv_addr));
+    	bzero((char *) &serv_addr, sizeof(serv_addr));
 
 	serv_addr.sun_family = AF_UNIX;
 	strcpy(serv_addr.sun_path, "/tmp/omg.sock");	
@@ -54,6 +54,6 @@ int main()
 	}
 
 	printf("\n");
-    close(fd);
+    	close(fd);
 	return 0;
 }

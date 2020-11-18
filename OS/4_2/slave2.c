@@ -7,10 +7,10 @@
 #include <stdlib.h>
 
 
-struct sembuf nbuf1[2] = {{0, -1, IPC_NOWAIT}, {1, -1, IPC_NOWAIT}};
-struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
-struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
-struct sembuf zeoro1[1] = {2, -3, 0}; // для посылки сообщения :) 
+struct sembuf nbuf[2] = {{0, -2, 0}, {0, +3, 0}};
+// struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
+// struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
+// struct sembuf zeoro1[1] = {2, -3, 0}; // для посылки сообщения :) 
 
 union semun 
 { int val;
@@ -94,33 +94,48 @@ int main()
 
 
 	int PID=0, minPrior = 0; 
-	while(semop(fd_sem, zeoro, 1 ) == -1)
-	{
-		if (semop(fd_sem, nbuf1, 2) != -1)
-		{
-		printf("%s", addr);
-		Finding_liver(addr, &minPrior, &PID);
-		semop(fd_sem, nbuf2, 2);
-		}
-	}
 
 
 
+	semop(fd_sem, &nbuf[0], 1); 
+	printf("%s\n", addr);
+	semop(fd_sem, &nbuf[1], 1); 
+	
+
+
+
+///////////////////////////////////////////////////////////	
+	// while(semop(fd_sem, zeoro, 1 ) == -1)
+	// {
+	// 	if (semop(fd_sem, nbuf1, 2) != -1)
+	// 	{
+	// 	printf("%s", addr);
+	// 	Finding_liver(addr, &minPrior, &PID);
+	// 	semop(fd_sem, nbuf2, 2);
+	// 	}
+	// }
+
+
+///////////////////////////////////////////////////////////
 
 	printf("=====================================================\n");
 
-	if (semctl( fd_sem, 0, IPC_STAT, arg) == 0)
-	{
-		printf("Rоличество семафоров в наборе: %ld\n", arg.sbuf -> sem_nsems );
-	}
-	printf("Минимальный приоритет %d у PID %d \n",minPrior, PID);
+
+///////////////////////////////////////////////////////////
+
+	// if (semctl( fd_sem, 0, IPC_STAT, arg) == 0)
+	// {
+	// 	printf("Rоличество семафоров в наборе: %ld\n", arg.sbuf -> sem_nsems );
+	// }
+	// printf("Минимальный приоритет %d у PID %d \n",minPrior, PID);
 
 
 
-	semop(fd_sem, zeoro1, 1 );
-	sprintf(addr, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
-	semop(fd_sem, zeoro1, 1 );
+	// semop(fd_sem, zeoro1, 1 );
+	// sprintf(addr, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
+	// semop(fd_sem, zeoro1, 1 );
 
+///////////////////////////////////////////////////////////
 
 
 
