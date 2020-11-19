@@ -19,10 +19,6 @@
 
 
 struct sembuf first[2] = {{0, +1, 0}, {0, -3, 0}};
-// struct sembuf first[1] = {{2, 2, 0}};
-// struct sembuf zero1[1] = {{2, 0, 0}}; // для принятия сообщений (через  РОП --------_____-------)
-// struct sembuf plus3[1] = {{2, 6, 0}}; // для принятия сообщений (через  РОП --------_____-------)
-
 
 
 union semun 
@@ -52,6 +48,7 @@ int main()
 
 	if ( fd == -1) { perror( "shmget" ); _exit(1); }
 	addr = (char*)(shmat(fd, 0, 0 ));
+	if ( addr == (char *)(-1)){ perror( "shmat" ); _exit ( 2 );}
 
 	fd_sem = semget( 100, 1, IPC_CREAT | 0640 );  // создим набор семафор 
 	if ( fd_sem == -1 ) { printf( "Ошибка в semget\n" ); _exit( 1 ); }
@@ -71,7 +68,7 @@ int main()
 		// strcat(temp, buffer);
 		strcat(addr, buffer);
 
-		// strcat(buffer, "\n");
+		// strcat(addr, "\n");
 	}
 
 	semop(fd_sem, &first[0], 1);

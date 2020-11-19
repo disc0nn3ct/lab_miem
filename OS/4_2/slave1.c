@@ -95,13 +95,17 @@ void Finding_liver(char* addr, int* maxSec, int* PID, char* state)
 
 int main()
 {
-	char* state;
+	char *state;
 	int maxSec = -1, PID = -1; 
 
 	int fd, fd_sem; 
 	char buffer[1024];
+	while(shmget(100, 0, 0 ) ==-1 )
+	{
+		;
+	}
 	fd = shmget(100, 0, 0 );
-	char* addr; 
+	char* addr, *s; 
 	addr = (char*)(shmat(fd, 0, 0 ));
 
 	fd_sem = semget( 100, 0, 0 );  // откроем набор семафор 
@@ -110,12 +114,57 @@ int main()
 
 
 	semop(fd_sem, &nbuf[0], 1); 
-	
-	// while() 
+
+	// fgets(buffer, 150, &addr);
 
 
 
-	printf("%s\n", addr);
+	memset(buffer, 0, sizeof(buffer)); 
+	// printf("%ld\n", strlen(&addr[1]) );
+	int ff = 0;
+    for (s = addr; *s != '\0'; s++)
+    {
+    	if(*s != '\n')
+    	{
+    		buffer[ff] = *s; ff++;
+    	}
+    	else
+    	{
+		    printf("%s\n", buffer);
+
+			Finding_liver(buffer, &maxSec, &PID, state);    		
+    		ff = 0;
+    		memset(buffer, 0, sizeof(buffer)); 
+
+    	}
+    	// strcat(buffer, *s);
+		// printf("%c", *s );
+        // putchar(*s);
+    }
+    // printf("\n%s\n", buffer);
+    // printf("%s\n", buffer);
+    // putchar('\n');
+
+
+
+		
+	// for(int k=0; k < strlen(addr); k++)
+	// {	
+	// 	if( &addr[k] != '\n')	
+	// 	{
+	// 		strcat(buffer, &addr[k]);
+	// 	}
+	// 	else
+	// 	{
+	// 		printf("%s\n", buffer);
+	// 		memset(buffer, 0, sizeof(buffer)); 
+	// 	}
+	// // printf("%s\n",buffer );
+	// }
+
+
+
+	// printf("%s\n", addr);
 	
 	semop(fd_sem, &nbuf[1], 1); 
 	

@@ -8,9 +8,7 @@
 
 
 struct sembuf nbuf[2] = {{0, -2, 0}, {0, +3, 0}};
-// struct sembuf nbuf2[2] = {{0, 2, IPC_NOWAIT}, {1, 2, IPC_NOWAIT}};
-// struct sembuf zeoro[1] = {{2, -1, IPC_NOWAIT}};
-// struct sembuf zeoro1[1] = {2, -3, 0}; // для посылки сообщения :) 
+
 
 union semun 
 { int val;
@@ -75,15 +73,16 @@ char buffer[100];
 }
 
 
-
-
-
 int main()
 {
 	int fd, fd_sem; 
 	char buffer[1024];
+	while(shmget(100, 0, 0 ) ==-1 )
+	{
+		;
+	}
 	fd = shmget(100, 0, 0 );
-	char* addr; 
+	char* addr, *s; 
 	addr = (char*)(shmat(fd, 0, 0 ));
 	struct semid_ds buf;	
 	arg.sbuf = &buf;
@@ -98,9 +97,40 @@ int main()
 
 
 	semop(fd_sem, &nbuf[0], 1); 
-	printf("%s\n", addr);
+	// printf("%s\n", addr);
+
+
+	memset(buffer, 0, sizeof(buffer)); 
+	// printf("%ld\n", strlen(&addr[1]) );
+	int ff = 0;
+    for (s = addr; *s != '\0'; s++)
+    {
+    	if(*s != '\n')
+    	{
+    		buffer[ff] = *s; ff++;
+    	}
+    	else
+    	{
+		    printf("%s\n", buffer);
+			Finding_liver(buffer, &minPrior, &PID);
+    		ff = 0;
+    		memset(buffer, 0, sizeof(buffer)); 
+    	}
+    	// strcat(buffer, *s);
+		// printf("%c", *s );
+        // putchar(*s);
+    }
+
+
 	semop(fd_sem, &nbuf[1], 1); 
 	
+
+
+
+
+
+
+
 
 
 
@@ -123,11 +153,11 @@ int main()
 
 ///////////////////////////////////////////////////////////
 
-	// if (semctl( fd_sem, 0, IPC_STAT, arg) == 0)
-	// {
-	// 	printf("Rоличество семафоров в наборе: %ld\n", arg.sbuf -> sem_nsems );
-	// }
-	// printf("Минимальный приоритет %d у PID %d \n",minPrior, PID);
+	if (semctl( fd_sem, 0, IPC_STAT, arg) == 0)
+	{
+		printf("Rоличество семафоров в наборе: %ld\n", arg.sbuf -> sem_nsems );
+	}
+	printf("Минимальный приоритет %d у PID %d \n",minPrior, PID);
 
 
 
