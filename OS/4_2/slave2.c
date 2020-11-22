@@ -107,6 +107,7 @@ int main()
     {
     	if(*s != '\n')
     	{
+
     		buffer[ff] = *s; ff++;
     	}
     	else
@@ -122,14 +123,8 @@ int main()
     }
 
 
-	semop(fd_sem, &nbuf[1], 1); 
+	// semop(fd_sem, &nbuf[1], 1); 
 	
-
-
-
-
-
-
 
 
 
@@ -161,9 +156,9 @@ int main()
 
 
 
-	// semop(fd_sem, zeoro1, 1 );
-	// sprintf(addr, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
-	// semop(fd_sem, zeoro1, 1 );
+	// semop(fd_sem, &nbuf[2], 1); 
+	sprintf(addr, "Минимальный приоритет %d у PID %d И Rоличество семафоров в наборе: %ld\n", minPrior, PID, arg.sbuf -> sem_nsems );
+	semop(fd_sem, &nbuf[1], 1); 
 
 ///////////////////////////////////////////////////////////
 

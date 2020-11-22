@@ -18,7 +18,7 @@
 #include <sys/sem.h> // для семафор 	
 
 
-struct sembuf first[2] = {{0, +1, 0}, {0, -3, 0}};
+struct sembuf first[4] = {{0, +1, 0}, {0, -3, 0}, {0, +4, 0}, {0, -5, 0}};
 
 
 union semun 
@@ -72,7 +72,7 @@ int main()
 	}
 
 	semop(fd_sem, &first[0], 1);
-	semop(fd_sem, &first[1], 1);
+	// semop(fd_sem, &first[1], 1);
 
 
 	printf("%ld\n", strlen(addr));
@@ -100,9 +100,24 @@ int main()
 
 
 
+
 if ( shmctl( fd, IPC_STAT,  &sbuf ) == 0 ) 
     { printf("Размер РОП: %ld\n",  sbuf.shm_segsz );}  
     
+
+// sleep(4);
+	semop(fd_sem, &first[1], 1);
+	printf("%s\n", addr);
+
+	semop(fd_sem, &first[2], 1);
+	// semop(fd_sem, &first[0], 1);  // 2 раза + 1, для проучения 2 for slave2
+	semop(fd_sem, &first[3], 1);
+	printf("%s\n", addr);
+
+
+
+
+
 
 
 //////////////////////////////////////////////////////

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-struct sembuf nbuf[2] = {{0, -1, 0}, {0, +2, 0}};
+struct sembuf nbuf[4] = {{0, -1, 0}, {0, +2, 0}, {0, -4, 0}, {0, +5, 0}};
 
 
 
@@ -166,8 +166,22 @@ int main()
 
 	// printf("%s\n", addr);
 	
-	semop(fd_sem, &nbuf[1], 1); 
-	
+
+	semop(fd_sem, &nbuf[1], 1);
+
+//////////////////////////////////////////////////dsfdfdfdfd
+
+	semop(fd_sem, &nbuf[2], 1); 
+
+
+	sprintf(addr, "Процесс долгожитель жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
+
+	semop(fd_sem, &nbuf[3], 1); 
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 
