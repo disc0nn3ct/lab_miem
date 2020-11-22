@@ -55,85 +55,28 @@ int main()
 
 
 
-	// arg.val = 2; semctl( fd_sem, 0, SETVAL, arg );
-	// arg.val = 0; semctl( fd_sem, 1, SETVAL, arg ); 
 	arg.val = 0; semctl( fd_sem, 0, SETVAL, arg ); 
 
 
 
-
-	// char temp[50000];
 	while(fgets(buffer, 150, f) != NULL)
 	{
 		// strcat(temp, buffer);
 		strcat(addr, buffer);
-
-		// strcat(addr, "\n");
 	}
 
 	semop(fd_sem, &first[0], 1);
-	// semop(fd_sem, &first[1], 1);
-
-
 	printf("%ld\n", strlen(addr));
-
-
-
-
-// 	if (f == NULL) perror ("Ошибка открытия файла");
-// 	else
-// 	{
-// 	while ( !feof(f) )                               
-// 	{
-// 		if ( fgets(buffer, 1024 , f) != NULL ) 
-// 		{     
-// 			strcpy(addr, buffer);  
-
-// 			semop(fd_sem, first1, 1);
-// 		}
-// 	}
-// 	fclose(f);                                      
-// 	}
-
-// semop(fd_sem, first, 1);
-
-
-
-
 
 if ( shmctl( fd, IPC_STAT,  &sbuf ) == 0 ) 
     { printf("Размер РОП: %ld\n",  sbuf.shm_segsz );}  
     
-
-// sleep(4);
 	semop(fd_sem, &first[1], 1);
 	printf("%s\n", addr);
 
 	semop(fd_sem, &first[2], 1);
-	// semop(fd_sem, &first[0], 1);  // 2 раза + 1, для проучения 2 for slave2
 	semop(fd_sem, &first[3], 1);
 	printf("%s\n", addr);
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////
-// arg.val = 0; semctl( fd_sem, 2, SETVAL, arg );
-// semop(fd_sem, first, 1);
-// semop(fd_sem, zero1, 1);
-// printf("%s\n", addr);
-
-// semop(fd_sem, plus3, 1);
-// semop(fd_sem, zero1, 1);
-// printf("%s\n", addr);
-
-//////////////////////////////////////////////////////
-
-
-
 
 
 if ( shmdt( addr ) == -1 ) perror("shmdt");

@@ -115,12 +115,9 @@ int main()
 
 	semop(fd_sem, &nbuf[0], 1); 
 
-	// fgets(buffer, 150, &addr);
-
 
 
 	memset(buffer, 0, sizeof(buffer)); 
-	// printf("%ld\n", strlen(&addr[1]) );
 	int ff = 0;
     for (s = addr; *s != '\0'; s++)
     {
@@ -137,35 +134,8 @@ int main()
     		memset(buffer, 0, sizeof(buffer)); 
 
     	}
-    	// strcat(buffer, *s);
-		// printf("%c", *s );
-        // putchar(*s);
     }
-    // printf("\n%s\n", buffer);
-    // printf("%s\n", buffer);
-    // putchar('\n');
 
-
-
-		
-	// for(int k=0; k < strlen(addr); k++)
-	// {	
-	// 	if( &addr[k] != '\n')	
-	// 	{
-	// 		strcat(buffer, &addr[k]);
-	// 	}
-	// 	else
-	// 	{
-	// 		printf("%s\n", buffer);
-	// 		memset(buffer, 0, sizeof(buffer)); 
-	// 	}
-	// // printf("%s\n",buffer );
-	// }
-
-
-
-	// printf("%s\n", addr);
-	
 
 	semop(fd_sem, &nbuf[1], 1);
 
@@ -178,46 +148,8 @@ int main()
 
 	semop(fd_sem, &nbuf[3], 1); 
 
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////
-
-	// while(semop(fd_sem, zeoro, 1 )== -1)
-	// {
-	// 	if (semop(fd_sem, nbuf1, 2) != -1)
-	// 	{
-	// 		printf("%s", addr);
-	// 		Finding_liver(addr, &maxSec, &PID, state);
-	// 		semop(fd_sem, nbuf2, 2);
-	// 	}
-
-	// }
-//////////////////////////////////////////////////////////////////////////////
-
-
-
 	printf("=====================================================\n");
 	printf("Сколько секунд жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
-
-
-
-
-
-
-///////////////////////////////////////////////////////////
-	// if (semop(fd_sem, zeoro1, 1) == -1 )
-	// {
-	// 	printf("%s\n", "Error");
-	// }
-	// sprintf(addr, "Процесс долгожитель жил %d PID = %d Cостояние = %s\n", maxSec, PID, state);
-	// // strcpy(addr, "LOL");  
-	// semop(fd_sem, zeoro1, 1 );
-
-///////////////////////////////////////////////////////////
-
 
 
 	if ( shmdt( addr ) == -1 ) perror("shmdt");   // need 

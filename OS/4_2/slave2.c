@@ -97,11 +97,9 @@ int main()
 
 
 	semop(fd_sem, &nbuf[0], 1); 
-	// printf("%s\n", addr);
 
 
 	memset(buffer, 0, sizeof(buffer)); 
-	// printf("%ld\n", strlen(&addr[1]) );
 	int ff = 0;
     for (s = addr; *s != '\0'; s++)
     {
@@ -117,31 +115,8 @@ int main()
     		ff = 0;
     		memset(buffer, 0, sizeof(buffer)); 
     	}
-    	// strcat(buffer, *s);
-		// printf("%c", *s );
-        // putchar(*s);
     }
 
-
-	// semop(fd_sem, &nbuf[1], 1); 
-	
-
-
-
-
-///////////////////////////////////////////////////////////	
-	// while(semop(fd_sem, zeoro, 1 ) == -1)
-	// {
-	// 	if (semop(fd_sem, nbuf1, 2) != -1)
-	// 	{
-	// 	printf("%s", addr);
-	// 	Finding_liver(addr, &minPrior, &PID);
-	// 	semop(fd_sem, nbuf2, 2);
-	// 	}
-	// }
-
-
-///////////////////////////////////////////////////////////
 
 	printf("=====================================================\n");
 
