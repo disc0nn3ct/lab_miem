@@ -5,9 +5,23 @@
 #include <stdlib.h>
 
 
+// так как тут дейтаграммы без соединения, надо запускать сначала server, а потом клиент. ( Клиент отправит в никуда просто )
+
 char msg1[] = "Hello there!\n";
 
-// так как тут дейтаграммы без соединения, надо запускать сначала server, а потом клиент. 
+void create_mess(char *msg1 )
+{
+    char buffer[2048];
+    char cmd[2300] = "pwd";
+    
+
+
+
+
+
+
+}
+
 
 int main()
 {
@@ -52,15 +66,9 @@ int main()
         exit(1);
     }
 
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(7500);
-    addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    // while(1)
-    // {
-            sendto(sock, msg1, sizeof(msg1), 0,
-                   (struct sockaddr *)&addr, sizeof(addr));
-        // }
-    
+    sendto(sock, msg1, sizeof(msg1), 0,
+           (struct sockaddr *)&addr, sizeof(addr));
+
 
 
     
