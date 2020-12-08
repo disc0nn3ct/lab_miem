@@ -38,7 +38,7 @@ int main()
 	strcat(cmd, buffer); 
 	strcat(cmd, " | awk -v f=1 -v t=15 \'{for(i=f;i<=t;i++) printf(\"%s%s\",$i,(i==t)?\"\\n\":OFS)}\' ");  // Нужно для ограничения 
 
-	f = popen (cmd, "r");
+	f = popen (cmd, "r"); 
 
 
 
@@ -74,7 +74,7 @@ if ( shmctl( fd, IPC_STAT,  &sbuf ) == 0 )
 	semop(fd_sem, &first[1], 1);
 	printf("%s\n", addr);
 
-	semop(fd_sem, &first[2], 1);
+	semop(fd_sem, &first[2], 1); // 
 	semop(fd_sem, &first[3], 1);
 	printf("%s\n", addr);
 
