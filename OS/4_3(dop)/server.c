@@ -7,7 +7,6 @@
 
 // так как тут дейтаграммы без соединения, надо запускать сначала server, а потом клиент. ( Клиент отправит в никуда просто )
 
-char msg1[] = "Hello there!\n";
 
 void create_mess(char *msg1, char *buffer)
 {
@@ -24,12 +23,7 @@ void create_mess(char *msg1, char *buffer)
 	}
 
 	strcat(cmd, " \"");
-
-    strcat(cmd, " | sed -e \"s/[[:space:]]\\+/ /g\" |  sort -nr " );
-
-    printf("LOL %s\n",cmd );
-
-    // char cmd[2300] = " | sed 1d | grep -lr main . | awk -F'/' '{print $NF}' | ls -l | sort -k6M -k7n | awk '{print $9}'";
+    strcat(cmd, " | sed -e \"s/[[:space:]]\\+/ /g\" |  sed -e \"s/[[:space:]]/\\\\\\| /g\" | cut -c 4- " );
     FILE *f= popen (cmd, "r");
     if (f == NULL) perror ("Ошибка открытия файла");
     else
@@ -42,14 +36,30 @@ void create_mess(char *msg1, char *buffer)
     }
     fclose (f);                                     // закрыть файл                         
     }
+    char cmd1[2300] = "ls -lct | grep '";           // работа со строками прелесна 
+    strcat(cmd1, buffer);
+    cmd1[strlen(cmd1)-1] = ' ';
+    cmd1[strlen(cmd1)-3] = ' ';
+    cmd1[strlen(cmd1)-4] = '\'';
+    strcat(cmd1, "| awk '{ print $9 }' | tr \"\\n\" \" \" ");
 
-    printf("LOL %s\n",buffer );
-
+    memset(buffer, 0, sizeof(buffer));
+    f= popen (cmd1, "r");
+    if (f == NULL) perror ("Ошибка открытия файла");
+    else
+    {
+    while ( !feof(f) )                              // пока не конец файла                           
+    {
+        if ( fgets(buffer, 1024, f) != NULL)       // считать символы из файла 
+         ;            
+    }
+    }
+    printf("Отсортировано по времени: %s\n",buffer );
 }
-
 
 int main()
 {
+
     int sock;
     struct sockaddr_in addr;
     char buf[4024];
@@ -78,7 +88,6 @@ int main()
 
     char buffer[2500];
     create_mess(buf, buffer);
-    // printf("After server work%s\n", buffer);
 
 ////////////////////////////////////////////////
     close(sock);
@@ -90,11 +99,8 @@ int main()
         exit(1);
     }
 
-    sendto(sock, msg1, sizeof(msg1), 0,
+    sendto(sock, buffer, sizeof(buffer), 0,
            (struct sockaddr *)&addr, sizeof(addr));
 
-
-
-    
     return 0;
 }

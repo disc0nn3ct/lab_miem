@@ -11,8 +11,6 @@ void create_mess(char *msg1 )
     char buffer[2048];
     char cmd[2300] = "pwd";
 
-
-
     FILE *f= popen (cmd, "r");
     if (f == NULL) perror ("Ошибка открытия файла");
     else
@@ -25,7 +23,6 @@ void create_mess(char *msg1 )
     }
     fclose (f);                                     // закрыть файл                         
     }
-
 
     memset(cmd, 0, sizeof(msg1));
     strcpy(cmd, "grep -lr main . | awk -F'/' '{print $NF}' | tr '\n' ' ' ");
@@ -44,8 +41,6 @@ void create_mess(char *msg1 )
 
     strcat(msg1, buffer);
 }
-
-
 
 int main()
 {
@@ -94,8 +89,5 @@ int main()
             break;
         }
     }
-
-
-
     return 0;
 }
