@@ -17,9 +17,7 @@ void create_mess(char *msg1 )
     {
     while ( !feof(f) )                              // пока не конец файла                           
     {
-        if ( fgets(msg1, 1024, f) != NULL)       // считать символы из файла 
-         ;        
-            
+        fgets(msg1, 1024, f);    
     }
     fclose (f);                                     // закрыть файл                         
     }
@@ -32,13 +30,10 @@ void create_mess(char *msg1 )
     {
     while ( !feof(f) )                              // пока не конец файла                           
     {
-        if ( fgets(buffer, 1024, f) != NULL)       // считать символы из файла 
-         ;        
-            
+        fgets(buffer, 1024, f);          
     }
     fclose (f);                                     // закрыть файл                         
     }
-
     strcat(msg1, buffer);
 }
 

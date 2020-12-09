@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> // for close
 
 // так как тут дейтаграммы без соединения, надо запускать сначала server, а потом клиент. ( Клиент отправит в никуда просто )
 
@@ -30,9 +31,7 @@ void create_mess(char *msg1, char *buffer)
     {
     while ( !feof(f) )                              // пока не конец файла                           
     {
-        if ( fgets(buffer, 1024, f) != NULL)       // считать символы из файла 
-         ;        
-            
+        fgets(buffer, 1024, f);       // считать символы из файла 
     }
     fclose (f);                                     // закрыть файл                         
     }
@@ -50,11 +49,12 @@ void create_mess(char *msg1, char *buffer)
     {
     while ( !feof(f) )                              // пока не конец файла                           
     {
-        if ( fgets(buffer, 1024, f) != NULL)       // считать символы из файла 
-         ;            
+        fgets(buffer, 1024, f);            
     }
     }
-    printf("Отсортировано по времени: %s\n",buffer );
+    fclose(f);                                     // закрыть файл                         
+    
+    printf("\nОтсортировано по времени: %s\n",buffer );
 }
 
 int main()
